@@ -18,9 +18,7 @@ const DEMO_LICENSES = [
   },
 ]
 
-export async function GET(
-  request: NextRequest
-): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
   try {
     const cookieStore = await cookies()
     const userCookie = cookieStore.get("user")
