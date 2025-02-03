@@ -185,66 +185,62 @@ interface License {
 
 // Demo modu için API fonksiyonları
 export const api = {
-  login: async (email: string, password: string) => {
-    // Demo için basit validasyon
-    if (email === "demo@example.com" && password === "Demo123!") {
-      return { user: MOCK_USER }
-    }
-    throw new Error("Geçersiz e-posta veya şifre")
-  },
+  login: (email: string, password: string) =>
+    request<LoginResponse>(API_ROUTES.auth.login, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    }),
 
-  register: async (name: string, email: string, password: string) => {
-    // Demo için her zaman başarılı
-    return { user: { ...MOCK_USER, name, email } }
-  },
+  register: (name: string, email: string, password: string) =>
+    request<RegisterResponse>(API_ROUTES.auth.register, {
+      method: "POST",
+      body: JSON.stringify({ name, email, password }),
+    }),
 
-  logout: async () => {
-    // Demo için boş promise
-    return Promise.resolve()
-  },
+  logout: () =>
+    request(API_ROUTES.auth.logout, {
+      method: "POST",
+    }),
 
-  getProfile: async () => {
-    return { user: MOCK_USER }
-  },
+  getProfile: () => request<ProfileResponse>(API_ROUTES.user.profile),
 
-  updateProfile: async (data: { name: string }) => {
-    return { user: { ...MOCK_USER, ...data } }
-  },
+  updateProfile: (data: { name: string }) =>
+    request(API_ROUTES.user.updateProfile, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
-  changePassword: async (data: {
+  changePassword: (data: {
     current_password: string
     password: string
     password_confirmation: string
-  }) => {
-    // Demo için her zaman başarılı
-    return Promise.resolve()
-  },
+  }) =>
+    request(API_ROUTES.user.changePassword, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 
-  getProducts: async () => {
-    return []
-  },
+  getProducts: () => request<Product[]>(API_ROUTES.products.list),
 
-  getProduct: async (id: string) => {
-    return null
-  },
+  getProduct: (id: string) =>
+    request<Product>(API_ROUTES.products.get(id)),
 
-  getOrders: async () => {
-    return MOCK_ORDERS
-  },
+  getOrders: () => request<Order[]>(API_ROUTES.orders.list),
 
-  createOrder: async (data: { product_id: string }) => {
-    return MOCK_ORDERS[0]
-  },
+  createOrder: (data: { product_id: string }) =>
+    request<Order>(API_ROUTES.orders.create, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 
-  verifyPayment: async (data: { order_id: string; transaction_hash: string }) => {
-    return Promise.resolve()
-  },
+  verifyPayment: (data: { order_id: string; transaction_hash: string }) =>
+    request(API_ROUTES.orders.verify, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
 
-  getLicenses: async () => {
-    return MOCK_LICENSES
-  },
+  getLicenses: () => request<License[]>(API_ROUTES.licenses.list),
 
-  getLicense: async (id: string) => {
-    return MOCK_LICENSES.find(license => license.id === id) || null
-  },
+  getLicense: (id: string) =>
+    request<License>(API_ROUTES.licenses.get(id)),
 } 
