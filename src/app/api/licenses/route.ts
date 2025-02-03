@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
 const DEMO_LICENSES = [
@@ -18,16 +18,26 @@ const DEMO_LICENSES = [
   },
 ]
 
-export async function GET() {
-  const cookieStore = cookies()
-  const userCookie = cookieStore.get("user")?.value
+export async function GET(
+  request: NextRequest
+): Promise<NextResponse> {
+  try {
+    const cookieStore = await cookies()
+    const userCookie = cookieStore.get("user")
 
-  if (!userCookie) {
+    if (!userCookie?.value) {
+      return NextResponse.json(
+        { message: "Oturum açmanız gerekiyor" },
+        { status: 401 }
+      )
+    }
+
+    return NextResponse.json(DEMO_LICENSES)
+  } catch (error) {
+    console.error("Lisans getirme hatası:", error)
     return NextResponse.json(
-      { message: "Oturum açmanız gerekiyor" },
-      { status: 401 }
+      { message: "Bir hata oluştu" },
+      { status: 500 }
     )
   }
-
-  return NextResponse.json(DEMO_LICENSES)
 } 
