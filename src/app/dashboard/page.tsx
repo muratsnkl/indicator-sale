@@ -49,9 +49,7 @@ export default function DashboardPage() {
         setOrders(ordersData)
       } catch (error) {
         console.error('Error loading dashboard data:', error)
-        toast({
-          variant: "destructive",
-          title: "Hata",
+        toast.error("Hata", {
           description: getErrorMessage(error)
         })
       } finally {
@@ -74,14 +72,11 @@ export default function DashboardPage() {
       }
 
       await api.updateProfile(data)
-      toast({
-        title: "Başarılı",
+      toast.success("Başarılı", {
         description: "Profil bilgileriniz güncellendi."
       })
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Hata",
+      toast.error("Hata", {
         description: getErrorMessage(error)
       })
     } finally {
@@ -102,17 +97,14 @@ export default function DashboardPage() {
       }
 
       await api.changePassword(data)
-      toast({
-        title: "Başarılı",
+      toast.success("Başarılı", {
         description: "Şifreniz değiştirildi."
       })
       
       // Formu temizle
       (e.target as HTMLFormElement).reset()
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Hata",
+      toast.error("Hata", {
         description: getErrorMessage(error)
       })
     } finally {
