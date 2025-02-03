@@ -34,7 +34,7 @@ export async function GET() {
     }
 
     return NextResponse.json(DEMO_ORDERS)
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Bir hata oluştu" },
       { status: 500 }

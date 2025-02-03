@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       message: "Kayıt başarılı",
       user: { email }
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Kayıt başarısız" },
       { status: 400 }
