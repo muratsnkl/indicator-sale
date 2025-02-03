@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
-type RouteSegment = {
-  id: string;
-};
-
 export async function POST(
   request: NextRequest,
-  { params }: { params: RouteSegment }
+  context: { params: { id: string } }
 ) {
   try {
     const cookieStore = await cookies()
@@ -30,7 +26,7 @@ export async function POST(
 
     return NextResponse.json({
       message: "Ödeme onaylandı",
-      orderId: params.id,
+      orderId: context.params.id,
       transactionHash: transaction_hash
     })
   } catch (error) {
