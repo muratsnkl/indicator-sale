@@ -236,7 +236,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <Label>İşlem Hash'i</Label>
+                  <Label>İşlem Hash&apos;i</Label>
                   <Input
                     value={transactionHash}
                     onChange={(e) => {
