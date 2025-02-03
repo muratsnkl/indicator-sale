@@ -1,11 +1,21 @@
 import { NextResponse } from "next/server"
+import { cookies } from "next/headers"
 
 export async function POST() {
-  const response = NextResponse.json({
-    message: "Çıkış yapıldı"
-  })
+  try {
+    const response = NextResponse.json({
+      message: "Başarıyla çıkış yapıldı",
+    })
 
-  response.cookies.delete("user")
+    // Cookie'yi sil
+    response.cookies.delete("user")
 
-  return response
+    return response
+  } catch (error) {
+    console.error("Logout error:", error)
+    return NextResponse.json(
+      { message: "Bir hata oluştu" },
+      { status: 500 }
+    )
+  }
 } 

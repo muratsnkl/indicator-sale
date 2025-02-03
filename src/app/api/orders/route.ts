@@ -21,42 +21,42 @@ const DEMO_ORDERS = [
 ]
 
 export async function GET() {
-  try {
-    const cookiesList = await cookies()
-    const userCookieValue = cookiesList.get("user")?.value
-    const userCookie = userCookieValue ? JSON.parse(userCookieValue) : null
+  const cookieStore = cookies()
+  const userCookie = cookieStore.get("user")?.value
 
-    if (!userCookie) {
-      return NextResponse.json(
-        { message: "Oturum açmanız gerekiyor" },
-        { status: 401 }
-      )
-    }
-
-    return NextResponse.json(DEMO_ORDERS)
-  } catch {
+  if (!userCookie) {
     return NextResponse.json(
-      { message: "Bir hata oluştu" },
-      { status: 500 }
+      { message: "Oturum açmanız gerekiyor" },
+      { status: 401 }
     )
   }
+
+  return NextResponse.json(DEMO_ORDERS)
 }
 
 export async function POST(request: Request) {
-  const { product_id, transaction_hash } = await request.json()
-  
-  // Gerçek implementasyonda:
-  // 1. Ürün kontrolü
-  // 2. Transaction hash doğrulama
-  // 3. Sipariş oluşturma
-  
-  return NextResponse.json({
-    message: "Sipariş oluşturuldu",
-    order: {
-      id: Math.random().toString(36).substr(2, 9),
-      product_id,
-      transaction_hash,
-      status: "pending"
-    }
-  })
+  const cookieStore = cookies()
+  const userCookie = cookieStore.get("user")?.value
+
+  if (!userCookie) {
+    return NextResponse.json(
+      { message: "Oturum açmanız gerekiyor" },
+      { status: 401 }
+    )
+  }
+
+  const body = await request.json()
+  const { product_id, currency } = body
+
+  const order = {
+    id: Math.random().toString(36).substring(7),
+    product_name: "Pro Trader İndikatörü",
+    amount: currency === "BTC" ? "0.001" : currency === "ETH" ? "0.01" : "50",
+    currency,
+    status: "pending",
+    created_at: new Date().toISOString(),
+    wallet_address: "0x1234567890abcdef1234567890abcdef12345678",
+  }
+
+  return NextResponse.json(order)
 } 

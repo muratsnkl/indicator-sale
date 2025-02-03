@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { cookies } from "next/headers"
 
 const DEMO_USER = {
   id: "1",
@@ -9,7 +10,8 @@ const DEMO_USER = {
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json()
+    const body = await request.json()
+    const { email, password } = body
 
     // Demo için basit doğrulama
     if (email === "demo@example.com" && password === "password") {
@@ -18,6 +20,7 @@ export async function POST(request: Request) {
       })
 
       // Cookie'ye user bilgisini kaydet
+      const cookieStore = cookies()
       response.cookies.set("user", JSON.stringify(DEMO_USER), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

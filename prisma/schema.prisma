@@ -10,38 +10,5 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // Vercel PostgreSQL için
-  directUrl = env("POSTGRES_URL_NON_POOLING") // Vercel PostgreSQL için direct connection
-}
-
-model Product {
-  id          String      @id @default(cuid())
-  slug        String      @unique
-  name        String
-  description String
-  features    Feature[]
-  indicators  Indicator[]
-  price_btc   String
-  price_eth   String
-  price_usdt  String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-}
-
-model Feature {
-  id        String   @id @default(cuid())
-  name      String
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Indicator {
-  id        String   @id @default(cuid())
-  name      String
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  url      = env("DATABASE_URL")
 }

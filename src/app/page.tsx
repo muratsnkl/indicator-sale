@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Lock, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, LineChart, BarChart2, TrendingUp, Lock, Zap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,25 +12,67 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default function Home() {
-  const testimonials = [
-    {
-      name: "Ahmet Y.",
-      title: "Profesyonel Trader",
-      comment: "Bu indikatörler sayesinde trading stratejimi önemli ölçüde geliştirdim."
-    },
-    {
-      name: "Mehmet K.",
-      title: "Yatırımcı",
-      comment: "Teknik analizlerimi daha doğru yapabiliyorum."
-    },
-    {
-      name: "Ayşe S.",
-      title: "Forex Trader",
-      comment: "Profesyonel destek ekibi her zaman yardımcı oluyor."
-    }
-  ]
+const features = [
+  {
+    name: "Profesyonel Analiz",
+    description:
+      "Gelişmiş teknik analiz araçları ile piyasaları profesyonel olarak analiz edin.",
+    icon: LineChart,
+  },
+  {
+    name: "Otomatik Alım/Satım",
+    description:
+      "Belirlediğiniz stratejilere göre otomatik alım/satım yapın.",
+    icon: BarChart2,
+  },
+  {
+    name: "Risk Yönetimi",
+    description:
+      "Akıllı stop-loss ve take-profit stratejileri ile riskinizi yönetin.",
+    icon: TrendingUp,
+  },
+];
 
+const featuredIndicators = [
+  {
+    title: "Pro Trader",
+    description:
+      "Profesyonel tüccarlar için geliştirilmiş, çoklu zaman dilimi analizi yapabilen indikatör.",
+    price: "₺1,499",
+    features: [
+      "Çoklu Zaman Dilimi Analizi",
+      "Otomatik Alım/Satım Sinyalleri",
+      "Risk Yönetimi",
+      "7/24 Destek",
+    ],
+  },
+  {
+    title: "Trend Master",
+    description:
+      "Trend takibi ve momentum analizi için özel olarak tasarlanmış indikatör.",
+    price: "₺999",
+    features: [
+      "Trend Analizi",
+      "Momentum Göstergeleri",
+      "Destek/Direnç Seviyeleri",
+      "Video Eğitimler",
+    ],
+  },
+  {
+    title: "Scalper Elite",
+    description:
+      "Kısa vadeli işlemler için optimize edilmiş, hızlı sinyal üreten indikatör.",
+    price: "₺799",
+    features: [
+      "Hızlı Sinyal Üretimi",
+      "Volatilite Analizi",
+      "Anlık Alım/Satım Fırsatları",
+      "Telegram Sinyalleri",
+    ],
+  },
+];
+
+export default function Home() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -92,6 +134,13 @@ export default function Home() {
       <section className="container py-16 md:py-24">
         <div className="grid gap-8 md:grid-cols-3">
           <Card className="p-6 space-y-2">
+            <LineChart className="h-10 w-10 text-primary mb-2" />
+            <h3 className="text-xl font-bold">Gelişmiş Analiz</h3>
+            <p className="text-muted-foreground">
+              Yapay zeka destekli teknik analiz araçları ile piyasayı daha iyi analiz edin.
+            </p>
+          </Card>
+          <Card className="p-6 space-y-2">
             <Zap className="h-10 w-10 text-primary mb-2" />
             <h3 className="text-xl font-bold">Hızlı Sinyaller</h3>
             <p className="text-muted-foreground">
@@ -103,13 +152,6 @@ export default function Home() {
             <h3 className="text-xl font-bold">Güvenli İşlem</h3>
             <p className="text-muted-foreground">
               Risk yönetimi araçları ile varlıklarınızı güvende tutun.
-            </p>
-          </Card>
-          <Card className="p-6 space-y-2">
-            <CheckCircle2 className="h-10 w-10 text-primary mb-2" />
-            <h3 className="text-xl font-bold">Profesyonel Destek</h3>
-            <p className="text-muted-foreground">
-              7/24 teknik destek ve özel eğitimlerle yanınızdayız.
             </p>
           </Card>
         </div>
@@ -127,42 +169,42 @@ export default function Home() {
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="p-6 space-y-2">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">1</span>
-              </div>
-              <h3 className="text-xl font-bold">Hesap Oluşturun</h3>
-              <p className="text-muted-foreground">
-                Hemen ücretsiz hesap oluşturun ve platformumuza erişin
-              </p>
-            </Card>
-            <Card className="p-6 space-y-2">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">2</span>
-              </div>
-              <h3 className="text-xl font-bold">İndikatör Seçin</h3>
-              <p className="text-muted-foreground">
-                Size en uygun indikatör paketini seçin
-              </p>
-            </Card>
-            <Card className="p-6 space-y-2">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">3</span>
-              </div>
-              <h3 className="text-xl font-bold">Ödeme Yapın</h3>
-              <p className="text-muted-foreground">
-                Güvenli ödeme yöntemleriyle satın alın
-              </p>
-            </Card>
-            <Card className="p-6 space-y-2">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-xl font-bold text-primary">4</span>
-              </div>
-              <h3 className="text-xl font-bold">Kullanmaya Başlayın</h3>
-              <p className="text-muted-foreground">
-                Kurulum rehberi ile hemen kullanmaya başlayın
-              </p>
-            </Card>
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">1</div>
+              <Card className="p-6">
+                <h3 className="font-bold text-lg mb-2">Hesap Oluşturun</h3>
+                <p className="text-muted-foreground">
+                  Hızlı kayıt süreciyle hesabınızı oluşturun ve hemen kullanmaya başlayın.
+                </p>
+              </Card>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">2</div>
+              <Card className="p-6">
+                <h3 className="font-bold text-lg mb-2">İndikatörü Yükleyin</h3>
+                <p className="text-muted-foreground">
+                  Size özel API anahtarınızı kullanarak indikatörü trading platformunuza ekleyin.
+                </p>
+              </Card>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
+              <Card className="p-6">
+                <h3 className="font-bold text-lg mb-2">Stratejinizi Belirleyin</h3>
+                <p className="text-muted-foreground">
+                  Risk seviyenizi ve trading stratejinizi belirleyin, indikatör ayarlarını kişiselleştirin.
+                </p>
+              </Card>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">4</div>
+              <Card className="p-6">
+                <h3 className="font-bold text-lg mb-2">Trading'e Başlayın</h3>
+                <p className="text-muted-foreground">
+                  Gerçek zamanlı sinyaller ve analizlerle profesyonel trading deneyimini yaşayın.
+                </p>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
@@ -201,7 +243,7 @@ export default function Home() {
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="p-6">
                 <div className="space-y-4">
-                  <p className="text-muted-foreground">&ldquo;{testimonial.comment}&rdquo;</p>
+                  <p className="text-muted-foreground">"{testimonial.comment}"</p>
                   <div className="flex items-center space-x-4">
                     <div className="rounded-full bg-muted w-10 h-10" />
                     <div>
@@ -353,3 +395,21 @@ export default function Home() {
     </main>
   );
 }
+
+const testimonials = [
+  {
+    comment: "Bu indikatörler sayesinde trading stratejimi tamamen değiştirdim. Artık daha tutarlı karlar elde ediyorum.",
+    name: "Ahmet Y.",
+    title: "Profesyonel Trader"
+  },
+  {
+    comment: "Kullanımı çok kolay ve sinyaller oldukça isabetli. Kesinlikle tavsiye ediyorum.",
+    name: "Mehmet K.",
+    title: "Kripto Yatırımcısı"
+  },
+  {
+    comment: "Teknik destek ekibi çok ilgili. Her soruma anında yanıt alabiliyorum.",
+    name: "Ayşe M.",
+    title: "Yeni Başlayan Trader"
+  }
+]

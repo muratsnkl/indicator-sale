@@ -2,7 +2,11 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useAuth } from "@/context/auth-context"
+import { useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Card,
   CardContent,
@@ -10,12 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useAuth } from "@/context/auth-context"
-import { useToast } from "@/components/ui/use-toast"
+import { validateEmail, validatePassword, validateName } from "@/lib/utils"
 import { getErrorMessage } from "@/lib/error-handler"
-import { validateEmail, validatePassword, validateConfirmPassword, validateName } from "@/lib/validations"
 
 export default function RegisterPage() {
   const { register } = useAuth()
@@ -32,16 +32,16 @@ export default function RegisterPage() {
     e.preventDefault()
     
     const formData = new FormData(e.currentTarget)
-    const name = formData.get('name') as string
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const confirmPassword = formData.get('confirmPassword') as string
+    const name = formData.get("name") as string
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
+    const confirmPassword = formData.get("confirmPassword") as string
 
     // Validasyon
     const nameError = validateName(name)
     const emailError = validateEmail(email)
     const passwordError = validatePassword(password)
-    const confirmPasswordError = validateConfirmPassword(password, confirmPassword)
+    const confirmPasswordError = password !== confirmPassword ? "Şifreler eşleşmiyor" : undefined
 
     if (nameError || emailError || passwordError || confirmPasswordError) {
       setErrors({
@@ -63,11 +63,21 @@ export default function RegisterPage() {
         description: "Hesabınız oluşturuldu.",
       })
     } catch (error) {
+      const errorMessage = getErrorMessage(error)
       toast({
         variant: "destructive",
         title: "Hata",
-        description: getErrorMessage(error),
+        description: errorMessage,
       })
+      
+      // API validasyon hatalarını form alanlarına yansıt
+      if (errorMessage.toLowerCase().includes("email")) {
+        setErrors(prev => ({ ...prev, email: errorMessage }))
+      } else if (errorMessage.toLowerCase().includes("şifre")) {
+        setErrors(prev => ({ ...prev, password: errorMessage }))
+      } else if (errorMessage.toLowerCase().includes("ad")) {
+        setErrors(prev => ({ ...prev, name: errorMessage }))
+      }
     } finally {
       setIsLoading(false)
     }

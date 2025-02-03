@@ -236,7 +236,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <Label>İşlem Hash&apos;i</Label>
+                  <Label>İşlem Hash'i</Label>
                   <Input
                     value={transactionHash}
                     onChange={(e) => {
@@ -244,7 +244,7 @@ export default function CheckoutPage() {
                       setError(null)
                     }}
                     placeholder="0x..."
-                    error={error || undefined}
+                    error={error}
                   />
                 </div>
 

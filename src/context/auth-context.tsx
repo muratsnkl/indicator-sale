@@ -1,9 +1,8 @@
 "use client"
 
-import React, { createContext, useContext, useState, useEffect } from "react"
+import * as React from "react"
 import { useRouter } from "next/navigation"
-import Cookies from 'js-cookie'
-import { api } from '@/lib/api'
+import { api } from "@/lib/api"
 
 interface User {
   id: string
@@ -17,80 +16,58 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>
   register: (name: string, email: string, password: string) => Promise<void>
   logout: () => Promise<void>
-  isLoading: boolean
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+const AuthContext = React.createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [user, setUser] = React.useState<User | null>(null)
   const router = useRouter()
 
-  useEffect(() => {
-    const initializeAuth = async () => {
+  React.useEffect(() => {
+    // Sayfa yüklendiğinde kullanıcı bilgilerini kontrol et
+    const checkAuth = async () => {
       try {
-        const userData = await api.getProfile()
-        setUser(userData)
+        const response = await api.getProfile()
+        setUser(response.user)
       } catch (error) {
-        console.error("Auth initialization error:", error)
-        Cookies.remove("user")
-      } finally {
-        setIsLoading(false)
+        setUser(null)
       }
     }
 
-    initializeAuth()
+    checkAuth()
   }, [])
 
   const login = async (email: string, password: string) => {
-    try {
-      setIsLoading(true)
-      const { user: userData } = await api.login(email, password)
-      setUser(userData)
-      router.push("/dashboard")
-    } catch (error) {
-      console.error("Login error:", error)
-      throw error
-    } finally {
-      setIsLoading(false)
-    }
+    const response = await api.login(email, password)
+    setUser(response.user)
+    router.push("/dashboard")
   }
 
   const register = async (name: string, email: string, password: string) => {
-    try {
-      setIsLoading(true)
-      const { user: userData } = await api.register(name, email, password)
-      setUser(userData)
-      router.push("/dashboard")
-    } catch (error) {
-      console.error("Register error:", error)
-      throw error
-    } finally {
-      setIsLoading(false)
-    }
+    const response = await api.register(name, email, password)
+    setUser(response.user)
+    router.push("/dashboard")
   }
 
   const logout = async () => {
-    try {
-      await api.logout()
-      setUser(null)
-      router.push("/")
-    } catch (error) {
-      console.error("Logout error:", error)
-      throw error
-    }
+    await api.logout()
+    setUser(null)
+    router.push("/")
   }
 
-  return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  const value = {
+    user,
+    login,
+    register,
+    logout,
+  }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
+  const context = React.useContext(AuthContext)
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider")
   }

@@ -2,14 +2,20 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { useAuth } from "@/context/auth-context"
 import { useToast } from "@/components/ui/use-toast"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { validateEmail, validatePassword } from "@/lib/utils"
 import { getErrorMessage } from "@/lib/error-handler"
-import { validateEmail, validatePassword } from "@/lib/validations"
 
 export default function LoginPage() {
   const { login } = useAuth()
@@ -24,8 +30,8 @@ export default function LoginPage() {
     e.preventDefault()
     
     const formData = new FormData(e.currentTarget)
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
+    const email = formData.get("email") as string
+    const password = formData.get("password") as string
 
     // Validasyon
     const emailError = validateEmail(email)

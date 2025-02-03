@@ -18,24 +18,16 @@ const DEMO_LICENSES = [
   },
 ]
 
-export async function GET(): Promise<NextResponse> {
-  try {
-    const cookieStore = await cookies()
-    const userCookie = cookieStore.get("user")
+export async function GET() {
+  const cookieStore = cookies()
+  const userCookie = cookieStore.get("user")?.value
 
-    if (!userCookie?.value) {
-      return NextResponse.json(
-        { message: "Oturum açmanız gerekiyor" },
-        { status: 401 }
-      )
-    }
-
-    return NextResponse.json(DEMO_LICENSES)
-  } catch (error) {
-    console.error("Lisans getirme hatası:", error)
+  if (!userCookie) {
     return NextResponse.json(
-      { message: "Bir hata oluştu" },
-      { status: 500 }
+      { message: "Oturum açmanız gerekiyor" },
+      { status: 401 }
     )
   }
+
+  return NextResponse.json(DEMO_LICENSES)
 } 
