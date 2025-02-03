@@ -68,7 +68,7 @@ export class WalletService {
       // Kullanıcıdan cüzdan bağlantısı için izin iste
       const accounts = await this.provider.send('eth_requestAccounts', [])
       return accounts[0]
-    } catch (error) {
+    } catch {
       throw new Error('Cüzdan bağlantısı reddedildi')
     }
   }
@@ -86,8 +86,11 @@ export class WalletService {
       
       // İşlemin onaylanmasını bekle
       const receipt = await tx.wait()
+      if (!receipt) {
+        throw new Error('İşlem makbuzu alınamadı')
+      }
       return receipt.status === 1 // 1: başarılı, 0: başarısız
-    } catch (error) {
+    } catch {
       throw new Error('İşlem doğrulanamadı')
     }
   }
@@ -100,7 +103,7 @@ export class WalletService {
     try {
       const balance = await this.provider.getBalance(address)
       return formatUnits(balance, 18)
-    } catch (error) {
+    } catch {
       throw new Error('Bakiye alınamadı')
     }
   }
@@ -111,9 +114,9 @@ export class WalletService {
     }
     
     try {
-      const signer = this.provider.getSigner()
-      return await signer.signMessage(message)
-    } catch (error) {
+      const signer = await this.provider.getSigner()
+      return signer.signMessage(message)
+    } catch {
       throw new Error('Mesaj imzalanamadı')
     }
   }
