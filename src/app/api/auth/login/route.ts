@@ -1,45 +1,27 @@
-import { NextResponse } from "next/server"
 import { cookies } from "next/headers"
-
-const DEMO_USER = {
-  id: "1",
-  name: "Demo User",
-  email: "demo@example.com",
-  email_verified_at: null,
-}
+import { NextResponse } from "next/server"
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
-    const { email, password } = body
+    const { email, password } = await request.json()
 
-    // Demo için basit doğrulama
-    if (email === "demo@example.com" && password === "password") {
-      const response = NextResponse.json({
-        user: DEMO_USER,
+    // Demo için basit validasyon
+    if (email === "demo@example.com" && password === "Demo123!") {
+      return NextResponse.json({
+        user: {
+          id: "1",
+          name: "Demo Kullanıcı",
+          email: "demo@example.com",
+          email_verified_at: null,
+        },
       })
-
-      // Cookie'ye user bilgisini kaydet
-      const cookieStore = cookies()
-      response.cookies.set("user", JSON.stringify(DEMO_USER), {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        path: "/",
-      })
-
-      return response
     }
 
-    return NextResponse.json(
-      { message: "Geçersiz e-posta veya şifre" },
-      { status: 401 }
-    )
+    throw new Error("Geçersiz e-posta veya şifre")
   } catch (error) {
-    console.error("Login error:", error)
     return NextResponse.json(
-      { message: "Bir hata oluştu" },
-      { status: 500 }
+      { message: "Giriş başarısız" },
+      { status: 401 }
     )
   }
 } 

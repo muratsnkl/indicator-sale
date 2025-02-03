@@ -35,28 +35,18 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const cookieStore = cookies()
-  const userCookie = cookieStore.get("user")?.value
-
-  if (!userCookie) {
+  try {
+    // Demo için her zaman başarılı
+    return NextResponse.json({
+      id: "1",
+      status: "pending",
+      total: 1499,
+      created_at: new Date().toISOString(),
+    })
+  } catch (error) {
     return NextResponse.json(
-      { message: "Oturum açmanız gerekiyor" },
-      { status: 401 }
+      { message: "Sipariş oluşturulamadı" },
+      { status: 400 }
     )
   }
-
-  const body = await request.json()
-  const { product_id, currency } = body
-
-  const order = {
-    id: Math.random().toString(36).substring(7),
-    product_name: "Pro Trader İndikatörü",
-    amount: currency === "BTC" ? "0.001" : currency === "ETH" ? "0.01" : "50",
-    currency,
-    status: "pending",
-    created_at: new Date().toISOString(),
-    wallet_address: "0x1234567890abcdef1234567890abcdef12345678",
-  }
-
-  return NextResponse.json(order)
 } 
