@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, LineChart, BarChart2, TrendingUp, Lock, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, Lock, Zap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -92,26 +92,21 @@ export default function Home() {
       <section className="container py-16 md:py-24">
         <div className="grid gap-8 md:grid-cols-3">
           <Card className="p-6 space-y-2">
-            <LineChart className="h-10 w-10 text-primary mb-2" />
-            <h3 className="text-xl font-bold">Gelişmiş Analiz</h3>
-            <p className="text-muted-foreground">
-              Yapay zeka destekli teknik analiz araçları ile piyasayı daha iyi analiz edin.
-            </p>
-          </Card>
-          <Card className="p-6 space-y-2">
-            <Zap className="h-10 w-10 text-primary mb-2" />
-            <h3 className="text-xl font-bold">Hızlı Sinyaller</h3>
-            <p className="text-muted-foreground">
-              Anlık alım-satım sinyalleri ile fırsatları kaçırmayın.
-            </p>
-          </Card>
-          <Card className="p-6 space-y-2">
-            <Lock className="h-10 w-10 text-primary mb-2" />
-            <h3 className="text-xl font-bold">Güvenli İşlem</h3>
-            <p className="text-muted-foreground">
-              Risk yönetimi araçları ile varlıklarınızı güvende tutun.
-            </p>
-          </Card>
+            <Card className="p-6 space-y-2">
+              <Zap className="h-10 w-10 text-primary mb-2" />
+              <h3 className="text-xl font-bold">Hızlı Sinyaller</h3>
+              <p className="text-muted-foreground">
+                Anlık alım-satım sinyalleri ile fırsatları kaçırmayın.
+              </p>
+            </Card>
+            <Card className="p-6 space-y-2">
+              <Lock className="h-10 w-10 text-primary mb-2" />
+              <h3 className="text-xl font-bold">Güvenli İşlem</h3>
+              <p className="text-muted-foreground">
+                Risk yönetimi araçları ile varlıklarınızı güvende tutun.
+              </p>
+            </Card>
+          </div>
         </div>
       </section>
 
