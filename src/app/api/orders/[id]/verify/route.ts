@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
 export async function POST(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
-  const cookieStore = cookies()
-  const userCookie = cookieStore.get("user")?.value
+  const cookieStore = await cookies()
+  const userCookie = cookieStore.get("user")
 
-  if (!userCookie) {
+  if (!userCookie?.value) {
     return NextResponse.json(
       { message: "Oturum açmanız gerekiyor" },
       { status: 401 }
@@ -25,7 +25,7 @@ export async function POST(
 
   return NextResponse.json({
     message: "Ödeme onaylandı",
-    orderId: params.id,
+    orderId: context.params.id,
     transactionHash: transaction_hash
   })
 } 
