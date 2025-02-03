@@ -18,8 +18,14 @@ export async function POST(
   const body = await request.json()
   const { transaction_hash } = body
 
-  // Demo için her zaman başarılı
+  // Gerçek implementasyonda:
+  // 1. params.id ile siparişi bul
+  // 2. transaction_hash'i doğrula
+  // 3. Siparişi güncelle
+
   return NextResponse.json({
     message: "Ödeme onaylandı",
+    orderId: params.id,
+    transactionHash: transaction_hash
   })
 } 

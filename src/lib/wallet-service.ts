@@ -1,20 +1,20 @@
-import { ethers } from 'ethers'
+import { BrowserProvider, JsonRpcSigner, formatEther } from "ethers"
 
 export class WalletService {
-  private provider: ethers.providers.Web3Provider | null = null
+  private provider: BrowserProvider | null = null
   
   async connect(): Promise<string> {
     if (typeof window === 'undefined' || !window.ethereum) {
       throw new Error('MetaMask yüklü değil')
     }
     
-    this.provider = new ethers.providers.Web3Provider(window.ethereum)
+    this.provider = new BrowserProvider(window.ethereum)
     
     try {
       // Kullanıcıdan cüzdan bağlantısı için izin iste
       const accounts = await this.provider.send('eth_requestAccounts', [])
       return accounts[0]
-    } catch (error) {
+    } catch {
       throw new Error('Cüzdan bağlantısı reddedildi')
     }
   }
@@ -32,8 +32,8 @@ export class WalletService {
       
       // İşlemin onaylanmasını bekle
       const receipt = await tx.wait()
-      return receipt.status === 1 // 1: başarılı, 0: başarısız
-    } catch (error) {
+      return receipt?.status === 1 // 1: başarılı, 0: başarısız
+    } catch {
       throw new Error('İşlem doğrulanamadı')
     }
   }
@@ -45,8 +45,8 @@ export class WalletService {
     
     try {
       const balance = await this.provider.getBalance(address)
-      return ethers.utils.formatEther(balance)
-    } catch (error) {
+      return formatEther(balance)
+    } catch {
       throw new Error('Bakiye alınamadı')
     }
   }
@@ -57,9 +57,9 @@ export class WalletService {
     }
     
     try {
-      const signer = this.provider.getSigner()
+      const signer = await this.provider.getSigner() as JsonRpcSigner
       return await signer.signMessage(message)
-    } catch (error) {
+    } catch {
       throw new Error('Mesaj imzalanamadı')
     }
   }
