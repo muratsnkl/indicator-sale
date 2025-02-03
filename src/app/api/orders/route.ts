@@ -21,17 +21,25 @@ const DEMO_ORDERS = [
 ]
 
 export async function GET() {
-  const cookieStore = cookies()
-  const userCookie = cookieStore.get("user")?.value
+  try {
+    const cookiesList = await cookies()
+    const userCookieValue = cookiesList.get("user")?.value
+    const userCookie = userCookieValue ? JSON.parse(userCookieValue) : null
 
-  if (!userCookie) {
+    if (!userCookie) {
+      return NextResponse.json(
+        { message: "Oturum açmanız gerekiyor" },
+        { status: 401 }
+      )
+    }
+
+    return NextResponse.json(DEMO_ORDERS)
+  } catch (error) {
     return NextResponse.json(
-      { message: "Oturum açmanız gerekiyor" },
-      { status: 401 }
+      { message: "Bir hata oluştu" },
+      { status: 500 }
     )
   }
-
-  return NextResponse.json(DEMO_ORDERS)
 }
 
 export async function POST(request: Request) {

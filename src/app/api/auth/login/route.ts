@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       })
 
       // Cookie'ye user bilgisini kaydet
-      const cookieStore = cookies()
+      const cookieStore = await cookies()
       response.cookies.set("user", JSON.stringify(DEMO_USER), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
