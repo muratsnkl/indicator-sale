@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
+interface RouteContext {
+  params: {
+    id: string;
+  };
+}
+
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: RouteContext
 ) {
   try {
-    const cookieStore = cookies()
-    const userCookie = cookieStore.get("user")
+    const cookiesList = await cookies()
+    const userCookie = cookiesList.get("user")
 
     if (!userCookie?.value) {
       return NextResponse.json(
@@ -26,7 +32,7 @@ export async function POST(
 
     return NextResponse.json({
       message: "Ödeme onaylandı",
-      orderId: params.id,
+      orderId: context.params.id,
       transactionHash: transaction_hash
     })
   } catch (error) {
