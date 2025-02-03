@@ -1,3 +1,47 @@
+// Demo modu için mock veriler
+const MOCK_USER = {
+  id: "1",
+  name: "Demo Kullanıcı",
+  email: "demo@example.com",
+  email_verified_at: null,
+}
+
+const MOCK_LICENSES = [
+  {
+    id: "1",
+    product_name: "Pro Trader",
+    license_key: "XXXX-XXXX-XXXX-XXXX",
+    expires_at: "2025-12-31",
+    is_active: true,
+  },
+  {
+    id: "2",
+    product_name: "Trend Master",
+    license_key: "YYYY-YYYY-YYYY-YYYY",
+    expires_at: "2025-12-31",
+    is_active: true,
+  },
+]
+
+const MOCK_ORDERS = [
+  {
+    id: "1",
+    product_name: "Pro Trader",
+    amount: "1499",
+    currency: "₺",
+    status: "completed",
+    created_at: "2024-02-01",
+  },
+  {
+    id: "2",
+    product_name: "Trend Master",
+    amount: "999",
+    currency: "₺",
+    status: "completed",
+    created_at: "2024-02-01",
+  },
+]
+
 const API_URL = "/api"
 
 const API_ROUTES = {
@@ -139,63 +183,68 @@ interface License {
   created_at: string
 }
 
+// Demo modu için API fonksiyonları
 export const api = {
-  login: (email: string, password: string) =>
-    request<LoginResponse>(API_ROUTES.auth.login, {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    }),
+  login: async (email: string, password: string) => {
+    // Demo için basit validasyon
+    if (email === "demo@example.com" && password === "Demo123!") {
+      return { user: MOCK_USER }
+    }
+    throw new Error("Geçersiz e-posta veya şifre")
+  },
 
-  register: (name: string, email: string, password: string) =>
-    request<RegisterResponse>(API_ROUTES.auth.register, {
-      method: "POST",
-      body: JSON.stringify({ name, email, password }),
-    }),
+  register: async (name: string, email: string, password: string) => {
+    // Demo için her zaman başarılı
+    return { user: { ...MOCK_USER, name, email } }
+  },
 
-  logout: () =>
-    request(API_ROUTES.auth.logout, {
-      method: "POST",
-    }),
+  logout: async () => {
+    // Demo için boş promise
+    return Promise.resolve()
+  },
 
-  getProfile: () => request<ProfileResponse>(API_ROUTES.user.profile),
+  getProfile: async () => {
+    return { user: MOCK_USER }
+  },
 
-  updateProfile: (data: { name: string }) =>
-    request(API_ROUTES.user.updateProfile, {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+  updateProfile: async (data: { name: string }) => {
+    return { user: { ...MOCK_USER, ...data } }
+  },
 
-  changePassword: (data: {
+  changePassword: async (data: {
     current_password: string
     password: string
     password_confirmation: string
-  }) =>
-    request(API_ROUTES.user.changePassword, {
-      method: "PUT",
-      body: JSON.stringify(data),
-    }),
+  }) => {
+    // Demo için her zaman başarılı
+    return Promise.resolve()
+  },
 
-  getProducts: () => request<Product[]>(API_ROUTES.products.list),
+  getProducts: async () => {
+    return []
+  },
 
-  getProduct: (id: string) =>
-    request<Product>(API_ROUTES.products.get(id)),
+  getProduct: async (id: string) => {
+    return null
+  },
 
-  getOrders: () => request<Order[]>(API_ROUTES.orders.list),
+  getOrders: async () => {
+    return MOCK_ORDERS
+  },
 
-  createOrder: (data: { product_id: string }) =>
-    request<Order>(API_ROUTES.orders.create, {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+  createOrder: async (data: { product_id: string }) => {
+    return MOCK_ORDERS[0]
+  },
 
-  verifyPayment: (data: { order_id: string; transaction_hash: string }) =>
-    request(API_ROUTES.orders.verify, {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+  verifyPayment: async (data: { order_id: string; transaction_hash: string }) => {
+    return Promise.resolve()
+  },
 
-  getLicenses: () => request<License[]>(API_ROUTES.licenses.list),
+  getLicenses: async () => {
+    return MOCK_LICENSES
+  },
 
-  getLicense: (id: string) =>
-    request<License>(API_ROUTES.licenses.get(id)),
+  getLicense: async (id: string) => {
+    return MOCK_LICENSES.find(license => license.id === id) || null
+  },
 } 

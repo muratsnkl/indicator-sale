@@ -8,13 +8,9 @@ const nextConfig = {
       },
     ],
   },
+  // Demo için API'yi devre dışı bırakıyoruz
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://192.168.1.103:8000/api/:path*'
-      }
-    ]
+    return []
   }
 }
 
