@@ -9,8 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/context/auth-context"
 import { api } from "@/lib/api"
-import { useToast } from "@/components/ui/use-toast"
-import { Toaster } from "@/components/ui/toaster"
+import { toast } from "sonner"
 import { getErrorMessage } from "@/lib/error-handler"
 import { LicensesSkeleton, OrdersSkeleton } from "@/components/skeletons"
 
@@ -34,7 +33,6 @@ interface Order {
 export default function DashboardPage() {
   const { user } = useAuth()
   const router = useRouter()
-  const { toast } = useToast()
   const [licenses, setLicenses] = useState<License[]>([])
   const [orders, setOrders] = useState<Order[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -62,7 +60,7 @@ export default function DashboardPage() {
     }
 
     loadData()
-  }, [toast])
+  }, [])
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -252,7 +250,6 @@ export default function DashboardPage() {
           </Tabs>
         </div>
       </div>
-      <Toaster />
     </>
   )
 } 
