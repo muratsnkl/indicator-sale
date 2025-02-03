@@ -127,42 +127,42 @@ export default function Home() {
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">1</div>
-              <Card className="p-6">
-                <h3 className="font-bold text-lg mb-2">Hesap Oluşturun</h3>
-                <p className="text-muted-foreground">
-                  Hızlı kayıt süreciyle hesabınızı oluşturun ve hemen kullanmaya başlayın.
-                </p>
-              </Card>
-            </div>
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">2</div>
-              <Card className="p-6">
-                <h3 className="font-bold text-lg mb-2">İndikatörü Yükleyin</h3>
-                <p className="text-muted-foreground">
-                  Size özel API anahtarınızı kullanarak indikatörü trading platformunuza ekleyin.
-                </p>
-              </Card>
-            </div>
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">3</div>
-              <Card className="p-6">
-                <h3 className="font-bold text-lg mb-2">Stratejinizi Belirleyin</h3>
-                <p className="text-muted-foreground">
-                  Risk seviyenizi ve trading stratejinizi belirleyin, indikatör ayarlarını kişiselleştirin.
-                </p>
-              </Card>
-            </div>
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold">4</div>
-              <Card className="p-6">
-                <h3 className="font-bold text-lg mb-2">Trading'e Başlayın</h3>
-                <p className="text-muted-foreground">
-                  Gerçek zamanlı sinyaller ve analizlerle profesyonel trading deneyimini yaşayın.
-                </p>
-              </Card>
-            </div>
+            <Card className="p-6 space-y-2">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">1</span>
+              </div>
+              <h3 className="text-xl font-bold">Hesap Oluşturun</h3>
+              <p className="text-muted-foreground">
+                Hemen ücretsiz hesap oluşturun ve platformumuza erişin
+              </p>
+            </Card>
+            <Card className="p-6 space-y-2">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">2</span>
+              </div>
+              <h3 className="text-xl font-bold">İndikatör Seçin</h3>
+              <p className="text-muted-foreground">
+                Size en uygun indikatör paketini seçin
+              </p>
+            </Card>
+            <Card className="p-6 space-y-2">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">3</span>
+              </div>
+              <h3 className="text-xl font-bold">Ödeme Yapın</h3>
+              <p className="text-muted-foreground">
+                Güvenli ödeme yöntemleriyle satın alın
+              </p>
+            </Card>
+            <Card className="p-6 space-y-2">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">4</span>
+              </div>
+              <h3 className="text-xl font-bold">Kullanmaya Başlayın</h3>
+              <p className="text-muted-foreground">
+                Kurulum rehberi ile hemen kullanmaya başlayın
+              </p>
+            </Card>
           </div>
         </div>
       </section>
