@@ -10,8 +10,7 @@ const DEMO_USER = {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
-    const { email, password } = body
+    const { email, password } = await request.json()
 
     // Demo için basit doğrulama
     if (email === "demo@example.com" && password === "password") {

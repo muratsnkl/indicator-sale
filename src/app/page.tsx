@@ -73,6 +73,24 @@ const featuredIndicators = [
 ];
 
 export default function Home() {
+  const testimonials = [
+    {
+      name: "Ahmet Y.",
+      title: "Profesyonel Trader",
+      comment: "Bu indikatörler sayesinde trading stratejimi önemli ölçüde geliştirdim."
+    },
+    {
+      name: "Mehmet K.",
+      title: "Yatırımcı",
+      comment: "Teknik analizlerimi daha doğru yapabiliyorum."
+    },
+    {
+      name: "Ayşe S.",
+      title: "Forex Trader",
+      comment: "Profesyonel destek ekibi her zaman yardımcı oluyor."
+    }
+  ]
+
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -395,21 +413,3 @@ export default function Home() {
     </main>
   );
 }
-
-const testimonials = [
-  {
-    comment: "Bu indikatörler sayesinde trading stratejimi tamamen değiştirdim. Artık daha tutarlı karlar elde ediyorum.",
-    name: "Ahmet Y.",
-    title: "Profesyonel Trader"
-  },
-  {
-    comment: "Kullanımı çok kolay ve sinyaller oldukça isabetli. Kesinlikle tavsiye ediyorum.",
-    name: "Mehmet K.",
-    title: "Kripto Yatırımcısı"
-  },
-  {
-    comment: "Teknik destek ekibi çok ilgili. Her soruma anında yanıt alabiliyorum.",
-    name: "Ayşe M.",
-    title: "Yeni Başlayan Trader"
-  }
-]
