@@ -1,9 +1,5 @@
 import * as React from "react"
-
-import type {
-  ToastActionElement,
-  ToastProps,
-} from "@/components/ui/toast"
+import type { ToastActionElement, ToastProps } from "@/components/ui/toast"
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
@@ -15,6 +11,13 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
+const actionTypes = {
+  ADD_TOAST: "ADD_TOAST",
+  UPDATE_TOAST: "UPDATE_TOAST",
+  DISMISS_TOAST: "DISMISS_TOAST",
+  REMOVE_TOAST: "REMOVE_TOAST",
+} as const
+
 let count = 0
 
 function genId() {
@@ -22,21 +25,23 @@ function genId() {
   return count.toString()
 }
 
+type ActionType = typeof actionTypes
+
 type Action =
   | {
-      type: "ADD_TOAST"
+      type: ActionType["ADD_TOAST"]
       toast: ToasterToast
     }
   | {
-      type: "UPDATE_TOAST"
+      type: ActionType["UPDATE_TOAST"]
       toast: Partial<ToasterToast>
     }
   | {
-      type: "DISMISS_TOAST"
+      type: ActionType["DISMISS_TOAST"]
       toastId?: ToasterToast["id"]
     }
   | {
-      type: "REMOVE_TOAST"
+      type: ActionType["REMOVE_TOAST"]
       toastId?: ToasterToast["id"]
     }
 
@@ -81,8 +86,6 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId)
       } else {
@@ -128,10 +131,12 @@ function dispatch(action: Action) {
   })
 }
 
-type Toast = Omit<ToasterToast, "id">
+interface Toast extends Omit<ToasterToast, "id"> {
+  id?: string
+}
 
-function toast({ ...props }: Toast) {
-  const id = genId()
+function createToast(props: Toast) {
+  const id = props.id || genId()
 
   const update = (props: ToasterToast) =>
     dispatch({
@@ -174,9 +179,9 @@ function useToast() {
 
   return {
     ...state,
-    toast,
+    toast: createToast,
     dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
   }
 }
 
-export { useToast, toast } 
+export { useToast, createToast as toast }
