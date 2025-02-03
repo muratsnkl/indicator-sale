@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
+type RouteSegment = {
+  id: string;
+};
+
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: RouteSegment }
 ) {
   try {
-    const cookiesList = cookies()
-    const userCookie = cookiesList.get("user")
+    const cookieStore = await cookies()
+    const userCookie = cookieStore.get("user")
 
     if (!userCookie?.value) {
       return NextResponse.json(
