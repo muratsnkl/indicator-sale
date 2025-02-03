@@ -1,18 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 
-type Context = {
-  params: {
-    id: string;
-  };
-};
-
 export async function POST(
   request: NextRequest,
-  { params }: Context
+  { params }: { params: { id: string } }
 ) {
   try {
-    const cookiesList = await cookies()
+    const cookiesList = cookies()
     const userCookie = cookiesList.get("user")
 
     if (!userCookie?.value) {
