@@ -12,66 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const features = [
-  {
-    name: "Profesyonel Analiz",
-    description:
-      "Gelişmiş teknik analiz araçları ile piyasaları profesyonel olarak analiz edin.",
-    icon: LineChart,
-  },
-  {
-    name: "Otomatik Alım/Satım",
-    description:
-      "Belirlediğiniz stratejilere göre otomatik alım/satım yapın.",
-    icon: BarChart2,
-  },
-  {
-    name: "Risk Yönetimi",
-    description:
-      "Akıllı stop-loss ve take-profit stratejileri ile riskinizi yönetin.",
-    icon: TrendingUp,
-  },
-];
-
-const featuredIndicators = [
-  {
-    title: "Pro Trader",
-    description:
-      "Profesyonel tüccarlar için geliştirilmiş, çoklu zaman dilimi analizi yapabilen indikatör.",
-    price: "₺1,499",
-    features: [
-      "Çoklu Zaman Dilimi Analizi",
-      "Otomatik Alım/Satım Sinyalleri",
-      "Risk Yönetimi",
-      "7/24 Destek",
-    ],
-  },
-  {
-    title: "Trend Master",
-    description:
-      "Trend takibi ve momentum analizi için özel olarak tasarlanmış indikatör.",
-    price: "₺999",
-    features: [
-      "Trend Analizi",
-      "Momentum Göstergeleri",
-      "Destek/Direnç Seviyeleri",
-      "Video Eğitimler",
-    ],
-  },
-  {
-    title: "Scalper Elite",
-    description:
-      "Kısa vadeli işlemler için optimize edilmiş, hızlı sinyal üreten indikatör.",
-    price: "₺799",
-    features: [
-      "Hızlı Sinyal Üretimi",
-      "Volatilite Analizi",
-      "Anlık Alım/Satım Fırsatları",
-      "Telegram Sinyalleri",
-    ],
-  },
-];
-
 export default function Home() {
   const testimonials = [
     {

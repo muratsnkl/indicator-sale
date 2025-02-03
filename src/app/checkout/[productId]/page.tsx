@@ -244,7 +244,7 @@ export default function CheckoutPage() {
                       setError(null)
                     }}
                     placeholder="0x..."
-                    error={error}
+                    error={error || undefined}
                   />
                 </div>
 
