@@ -261,7 +261,7 @@ export default function Home() {
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="p-6">
                 <div className="space-y-4">
-                  <p className="text-muted-foreground">&quot;{testimonial.comment}&quot;</p>
+                  <p className="text-muted-foreground">&ldquo;{testimonial.comment}&rdquo;</p>
                   <div className="flex items-center space-x-4">
                     <div className="rounded-full bg-muted w-10 h-10" />
                     <div>
