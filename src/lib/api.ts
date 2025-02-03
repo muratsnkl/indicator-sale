@@ -1,47 +1,3 @@
-// Demo modu için mock veriler
-const MOCK_USER = {
-  id: "1",
-  name: "Demo Kullanıcı",
-  email: "demo@example.com",
-  email_verified_at: null,
-}
-
-const MOCK_LICENSES = [
-  {
-    id: "1",
-    product_name: "Pro Trader",
-    license_key: "XXXX-XXXX-XXXX-XXXX",
-    expires_at: "2025-12-31",
-    is_active: true,
-  },
-  {
-    id: "2",
-    product_name: "Trend Master",
-    license_key: "YYYY-YYYY-YYYY-YYYY",
-    expires_at: "2025-12-31",
-    is_active: true,
-  },
-]
-
-const MOCK_ORDERS = [
-  {
-    id: "1",
-    product_name: "Pro Trader",
-    amount: "1499",
-    currency: "₺",
-    status: "completed",
-    created_at: "2024-02-01",
-  },
-  {
-    id: "2",
-    product_name: "Trend Master",
-    amount: "999",
-    currency: "₺",
-    status: "completed",
-    created_at: "2024-02-01",
-  },
-]
-
 const API_URL = "/api"
 
 const API_ROUTES = {
@@ -183,7 +139,6 @@ interface License {
   created_at: string
 }
 
-// Demo modu için API fonksiyonları
 export const api = {
   login: (email: string, password: string) =>
     request<LoginResponse>(API_ROUTES.auth.login, {
